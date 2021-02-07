@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'utils.apps.UtilsConfig',
+    'posts.apps.PostsConfig',
 
 
     ######### #kayıt işlemleri için endpointler falan yaratıyor,  pip freeze> requirements.txt django-allauth

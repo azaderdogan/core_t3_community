@@ -1,13 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from users.api.views import *
-from users.views import UserListCreateAPIView
-
 router = DefaultRouter()
 
 router.register(r'profiles', ProfileViewSet, basename='profile')
-router.register(r'rosettes', RosetteListViewSet, basename='rosettes')
-
+router.register(r'rosettes', RosetteListViewSet, basename='rosette')
+router.register(r'',UserViewSet,basename='user')
 users_list_view = UserViewSet.as_view({
     'get': 'list',
     'post': 'create'
