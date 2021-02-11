@@ -105,6 +105,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -159,9 +160,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',  # token login
         'rest_framework.authentication.SessionAuthentication',  # api page
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+
 }
 
 # for registration

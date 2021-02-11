@@ -7,11 +7,13 @@ from pprint import pprint
 from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound, NotAcceptable
 from rest_framework.generics import get_object_or_404
+from posts.api.permissions import IsPostAuthorOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsPostAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         me = self.request.user
@@ -39,12 +41,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class PostCommentViewSet(viewsets.ModelViewSet):
     serializer_class = PostCommentSerializer
+    permission_classes = [IsPostAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         parent_post_pk = self.kwargs.get('post_pk')
         parent_post = get_object_or_404(Post, pk=parent_post_pk)
         me = self.request.user
-
 
         serializer.save(parent_post=parent_post, author=me)
 
@@ -55,7 +57,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         return comments
 
     @action(detail=True)
-    def like(self, request,pk=None, post_pk=None):
+    def like(self, request, pk=None, post_pk=None):
         user = request.user
         comment = self.get_object()
         if comment.likes.filter(username=user.username).exists():
@@ -64,7 +66,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_200_OK)
 
     @action(detail=True)
-    def dislike(self, request, pk=None,post_pk=None):
+    def dislike(self, request, pk=None, post_pk=None):
         user = request.user
         comment = self.get_object()
         if comment.likes.filter(username=user.username).exists() != True:

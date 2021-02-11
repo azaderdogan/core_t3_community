@@ -1,20 +1,18 @@
-from rest_framework import viewsets, mixins
-from utils.models import *
 from utils.api.serializers import *
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
-from pprint import pprint
 from rest_framework import viewsets
+from utils.api.permissions import *
 
 
 class CityListView(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class DistrictListView(viewsets.ModelViewSet):
     serializer_class = DistrictSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
         city = get_object_or_404(City, pk=self.kwargs.get('city_pk'))
@@ -26,10 +24,12 @@ class DistrictListView(viewsets.ModelViewSet):
 class SchoolListView(viewsets.ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class FacultyListView(viewsets.ModelViewSet):
     serializer_class = FacultySerializer
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         school = get_object_or_404(School, pk=self.kwargs.get('school_pk'))
@@ -39,6 +39,7 @@ class FacultyListView(viewsets.ModelViewSet):
 
 class DepartmentListView(viewsets.ModelViewSet):
     serializer_class = DepartmentSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         faculty = get_object_or_404(Faculty, pk=self.kwargs.get('faculty_pk'))

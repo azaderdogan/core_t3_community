@@ -2,16 +2,17 @@ from pprint import pprint
 
 import requests
 
-
 # ACCOUNT_EMAIL_REQUIRED = (True,)
 """status code:  400
 {'email': ['A user is already registered with this e-mail address.']}
 """
+
+
 def registration():
     # LOGİN
     credentials = {
-        'username': 'zehra',
-        'email': 'tests2@gmail.co',
+        'username': 'community',
+        'email': 'community@gmail.co',
         'password1': 'test123.',
         'password2': 'test123.',
     }

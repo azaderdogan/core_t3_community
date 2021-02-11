@@ -10,12 +10,14 @@ from rest_framework import status
 from pprint import pprint
 
 from rest_framework.generics import get_object_or_404
+from users.api.permissions import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
+    permission_classes = [permissions.IsAuthenticated,IsMe ]
 
     @action(detail=True)
     def follow(self, request, username=None, *args, **kwargs):
@@ -61,7 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, MeOrIsAdminUserOrReadOnly]
 
     def perform_update(self, serializer):
         pprint('GİRİLDİ')
@@ -111,7 +113,7 @@ class RosetteViewSet(viewsets.ModelViewSet):
 
 class ProfileRetrieveViewSet(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, MeOrIsAdminUserOrReadOnly]
 
     def get_object(self, *args, **kwargs):
 
