@@ -21,7 +21,6 @@ class PostViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def like(self, request, pk=None):
         user = request.user
-
         post = self.get_object()
         if post.likes.filter(username=user.username).exists():
             raise NotAcceptable('Daha önce beğenmiştiniz')
@@ -44,10 +43,8 @@ class PostCommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         parent_post_pk = self.kwargs.get('post_pk')
         parent_post = get_object_or_404(Post, pk=parent_post_pk)
-        pprint(parent_post)
-
         me = self.request.user
-        pprint('CALISTIIII')
+
 
         serializer.save(parent_post=parent_post, author=me)
 
@@ -60,7 +57,6 @@ class PostCommentViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def like(self, request,pk=None, post_pk=None):
         user = request.user
-
         comment = self.get_object()
         if comment.likes.filter(username=user.username).exists():
             raise NotAcceptable('Daha önce beğenmiştiniz')
