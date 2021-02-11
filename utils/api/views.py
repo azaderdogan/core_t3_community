@@ -8,30 +8,27 @@ from pprint import pprint
 from rest_framework import viewsets
 
 
-class CityListView(mixins.ListModelMixin,
-                   viewsets.GenericViewSet):
+class CityListView(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
 
 
-class DistrictListView(mixins.ListModelMixin,
-                       viewsets.GenericViewSet):
+class DistrictListView(viewsets.ModelViewSet):
     serializer_class = DistrictSerializer
 
-    def get_queryset(self):
-        city = get_object_or_404(City, pk=self.kwargs.get('pk'))
+    def get_queryset(self, *args, **kwargs):
+        city = get_object_or_404(City, pk=self.kwargs.get('city_pk'))
+        print('Çalışıyor', city)
         queryset = District.objects.filter(city=city)
         return queryset
 
 
-class SchoolListView(mixins.ListModelMixin,
-                     viewsets.GenericViewSet):
+class SchoolListView(viewsets.ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
 
 
-class FacultyListView(mixins.ListModelMixin,
-                      viewsets.GenericViewSet):
+class FacultyListView(viewsets.ModelViewSet):
     serializer_class = FacultySerializer
 
     def get_queryset(self):
@@ -40,8 +37,7 @@ class FacultyListView(mixins.ListModelMixin,
         return queryset
 
 
-class DepartmentListView(mixins.ListModelMixin,
-                         viewsets.GenericViewSet):
+class DepartmentListView(viewsets.ModelViewSet):
     serializer_class = DepartmentSerializer
 
     def get_queryset(self):

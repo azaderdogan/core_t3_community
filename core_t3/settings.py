@@ -23,14 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'rest_auth' ,   #pip install django-rest-auth login logout endpointleri için
+    'rest_auth',  # pip install django-rest-auth login logout endpointleri için
     'rest_framework.authtoken',  # gelen tokenleri kontrol eder, migrate gerektirir
-
 
     'users.apps.UsersConfig',
     'utils.apps.UtilsConfig',
     'posts.apps.PostsConfig',
-
 
     ######### #kayıt işlemleri için endpointler falan yaratıyor,  pip freeze> requirements.txt django-allauth
     'allauth',  # pip install django-allauth for registration
@@ -38,7 +36,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # bunu şimdi yapıyoruz çünkü restauth allauthu kullanıyor i optional
     'rest_auth.registration',  # site için id falan araştır bunu  todo
     'django.contrib.sites',
-'django_extensions',
+    'django_extensions',
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -143,17 +141,19 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'uploads'
 
-AUTH_USER_MODEL = "users.User"
+# AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 15,
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',# token login
-        'rest_framework.authentication.SessionAuthentication', # api page
+        'rest_framework.authentication.TokenAuthentication',  # token login
+        'rest_framework.authentication.SessionAuthentication',  # api page
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ]
 }
-
 
 # for registration
 

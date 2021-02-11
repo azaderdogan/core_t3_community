@@ -96,14 +96,13 @@ def init_post():
         post_instance = Post(
             author=user,
             content=content,
-            number_of_likes=random_number,
-
         )
 
         post_instance.save()
         for j in range(5):
             random_number = int(random.random() * 50)
             post_instance.tags.add(Tag.objects.get(pk=random_number))
+            post_instance.likes.add(User.objects.get(pk=random_number))
             pprint(post_instance.tags)
 
 
@@ -120,8 +119,6 @@ def init_comments():
             parent_post=ppost,
             author=user,
             content=content,
-            number_of_likes=random_number,
-
         )
 
         post_comment_instance.save()
@@ -129,15 +126,17 @@ def init_comments():
             random_number = int(random.random() * 50)
             post_comment_instance.tags.add(Tag.objects.get(pk=random_number))
             pprint(post_comment_instance.tags)
+            post_comment_instance.likes.add(User.objects.get(pk=random_number))
 
 
 def init_db():
     print('Sehirler yükleniyor...')
-    # init_cities()
+    #init_cities()
     print('Kullanıcılar yükleniyor')
     for i in range(60):
         set_user()
-
+    print('Tags yükleniyor')
+    init_tags()
     print('post işlemleri başladı...')
     init_post()
     print('Comment işlemleri başladı...')

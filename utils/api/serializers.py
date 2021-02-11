@@ -13,6 +13,7 @@ class CitySerializer(serializers.ModelSerializer):
         queryset = District.objects.filter(city=obj)
         serializer = DistrictSerializer(many=True, data=queryset)
         serializer.is_valid()
+        lookup_field = 'plate_code'
         return serializer.data
 
 

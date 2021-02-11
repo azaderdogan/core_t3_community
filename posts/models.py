@@ -15,9 +15,6 @@ class Tag(models.Model):
         return self.name
 
 
-
-
-
 """ class Answer(Model):
         question = ForeignKey(Question, related_name='answers', **kw)
 
@@ -25,9 +22,10 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author')
+
     content = models.TextField()
-    number_of_likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User,  related_name='post_likes')
 
     create_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
@@ -39,12 +37,14 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_author')
     parent_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
-    number_of_likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='comment_likes')
 
     create_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
 
     tags = models.ManyToManyField(Tag, related_name='comments')
+    def __str__(self):
+        return self.content
