@@ -16,6 +16,7 @@ class FollowingSerializer(serializers.ModelSerializer):
 
 class FollowersSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+
     class Meta:
         model = UserFollowing
         lookup_field = 'username'
@@ -86,6 +87,7 @@ class ProfilePhotoSerializer(serializers.ModelSerializer):
         fields = ['profile_photo']
 
 
+
 class RosetteUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rosette
@@ -96,3 +98,4 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+        read_only_fields = ('user','rosette')

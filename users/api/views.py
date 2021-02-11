@@ -95,14 +95,18 @@ class ProfilePhotoUpdateView(generics.UpdateAPIView):
         return profile
 
 
-class RosetteListViewSet(viewsets.ModelViewSet):
+class RosetteViewSet(viewsets.ModelViewSet):
     queryset = Rosette.objects.all()
     serializer_class = RosetteSerializer
 
-
-class RosetteUpdateViewSet(generics.UpdateAPIView):
-    serializer_class = RosetteSerializer
-    queryset = Rosette.objects.all()
+    @action(detail=True)
+    def add_user(self, request, pk=None, *args, **kwargs):
+        rosette = self.get_object()
+        print(str(rosette))
+        me = self.request.user
+        me.profile.rosettes.add(rosette)
+        # rosette.users.add(me_profile)
+        return Response(status=status.HTTP_200_OK)
 
 
 class ProfileRetrieveViewSet(generics.RetrieveUpdateDestroyAPIView):
@@ -121,12 +125,10 @@ class ProfileRetrieveViewSet(generics.RetrieveUpdateDestroyAPIView):
         return profile
 
     """:return{
-        "id": 2,
         "biography": "Milli Teknoloji Neferi",
         "birth_of_date": null,
         "phone_number": "054546656546",
         "tc_number": "39710000",
-        "user": 2,
         "school": 1,
         "faculty": 1,
         "department": 16729,
@@ -138,15 +140,11 @@ class ProfileRetrieveViewSet(generics.RetrieveUpdateDestroyAPIView):
 
         instance = self.get_object()
         serializer = ProfileUpdateSerializer(instance, data=request.data)
-        serializer.is_valid()
-        self.perform_update(serializer)
+        if serializer.is_valid():
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
-        return Response(serializer.data)
-
-    # def perform_update(self, serializer):
-    #     pprint(self.request.data['district'])
-    #     #city = generics.get_object_or_404(City, city_name=self.request.data['city'])
-    #     #district = generics.get_object_or_404(District, city=city, district_name=self.request.data['district'])
-    #
-    #     serializer.save(city=city, district=district, rosettes=self.request.data['rosettes'], user=self.request.user)
-    #
+    def perform_update(self, serializer):
+        me = self.request.user
+        serializer.save(user=me)

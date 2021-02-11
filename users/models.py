@@ -104,7 +104,7 @@ class Profile(models.Model):
     city = models.ForeignKey(City, on_delete=models.DO_NOTHING, null=True)
     district = models.ForeignKey(District, on_delete=models.DO_NOTHING)
 
-    rosettes = models.ManyToManyField(Rosette, related_name='rosettes', blank=True)
+    rosettes = models.ManyToManyField(Rosette, related_name='users', blank=True)
 
     class Meta:
         verbose_name_plural = 'kullanıcı_profilleri'
