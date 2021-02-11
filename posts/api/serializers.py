@@ -45,9 +45,10 @@ class PostSerializer(serializers.ModelSerializer):
         lookup_field='username'
     )
     time_since_pub = serializers.SerializerMethodField()
-    comments = serializers.StringRelatedField(read_only=True,many=True)
+    comments = serializers.StringRelatedField(read_only=True, many=True)
     tags = serializers.StringRelatedField(many=True, read_only=True)
     number_of_likes = serializers.SerializerMethodField(read_only=True)
+    likes = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Post

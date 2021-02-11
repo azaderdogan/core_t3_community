@@ -21,12 +21,21 @@ class PostViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def like(self, request, pk=None):
         user = request.user
-        # todo id cek
+
         post = self.get_object()
-        pprint(post)
-        user_likes = Post.likes.get(username=user.username)
-        if user_likes.exists():
+        if post.likes.filter(username=user.username).exists():
             raise NotAcceptable('Daha önce beğenmiştiniz')
+        user.post_likes.add(post)
+        return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True)
+    def dislike(self, request, pk=None):
+        user = request.user
+        post = self.get_object()
+        if post.likes.filter(username=user.username).exists() != True:
+            raise NotAcceptable('Zaten beğenmemiştiniz')
+        user.post_likes.remove(post)
+        return Response(status=status.HTTP_200_OK)
 
 
 class PostCommentViewSet(viewsets.ModelViewSet):
@@ -47,6 +56,25 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         post = Post.objects.get(pk=post_pk)
         comments = PostComment.objects.filter(parent_post=post)
         return comments
+
+    @action(detail=True)
+    def like(self, request,pk=None, post_pk=None):
+        user = request.user
+
+        comment = self.get_object()
+        if comment.likes.filter(username=user.username).exists():
+            raise NotAcceptable('Daha önce beğenmiştiniz')
+        user.comment_likes.add(comment)
+        return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True)
+    def dislike(self, request, pk=None,post_pk=None):
+        user = request.user
+        comment = self.get_object()
+        if comment.likes.filter(username=user.username).exists() != True:
+            raise NotAcceptable('Zaten beğenmemiştiniz')
+        user.comment_likes.remove(comment)
+        return Response(status=status.HTTP_200_OK)
 
 
 class TagViewSet(viewsets.ModelViewSet):
