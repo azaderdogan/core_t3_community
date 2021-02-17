@@ -5,3 +5,4 @@ from posts.models import *
 admin.site.register(Post)
 admin.site.register(PostComment)
 admin.site.register(Tag)
+admin.site.register(Activity)

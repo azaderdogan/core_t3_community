@@ -23,11 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/members/', include('users.api.urls')),
     path('api/utils/', include('utils.api.urls')),
-    path('api/posts/', include('posts.api.urls')),
+    path('api/actions/', include('posts.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
     # browsable api sayfası için - daha önce yaptığımız gibi(api sayfaındaki login butonu)
     path('api/rest-auth/', include('rest_auth.urls')),  # django rest auth ile gelen endpointler için
-    path('api/rest-auth/registration/', include('rest_auth.registration.urls')), # buraya istek yapıp kullanıcı kaydı yapacağız
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
+    # buraya istek yapıp kullanıcı kaydı yapacağız
 ]
 
 if settings.DEBUG == True:

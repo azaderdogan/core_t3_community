@@ -9,18 +9,6 @@ parent_router = SimpleRouter()
 
 parent_router.register('users', UserViewSet)
 
-# profile_router = routers.NestedSimpleRouter(
-#     router,
-#     r'users',
-#     lookup='user'
-# )
-#
-# profile_router.register(
-#     r'profile',
-#     ProfileViewSet,
-#     basename='user-profile',
-# )
-
 app_name = 'users'
 
 parent_router.register(r'rosettes', RosetteViewSet, basename='rosette')

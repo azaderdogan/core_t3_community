@@ -18,9 +18,34 @@ def get_data():
     pprint(response_data)
 
 
-def create_new_user():
-    pass
+def activity_create():
+    token = 'Token 39413f018e799b7877d2f89ee0086db526ba0396'
+    headers = {
+        'Authorization': token,
+    }
+    data = {
+
+    "activity_name": "Django etkinliği 2020",
+    "about": "django rest framework öğreniyoruz",
+    "is_online": True,
+    "is_private": False,
+    "is_active": False,
+    "starting_date": "2021-02-13T20:56:00+03:00",
+    "due_date": "2021-02-13T22:56:00+03:00",
+    "broadcasting_url": "url",
+    'creator':2
+}
+
+    response = requests.post(
+        url='http://127.0.0.1:8000/api/actions/activities/',
+        headers=headers,
+        data=data
+    )
+    print('status code: ', response.status_code)
+
+    response_data = response.json()
+    pprint(response_data)
 
 
 if __name__ == '__main__':
-    get_data()
+    activity_create()

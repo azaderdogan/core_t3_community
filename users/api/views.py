@@ -66,7 +66,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, MeOrIsAdminUserOrReadOnly]
 
     def perform_update(self, serializer):
-        pprint('GİRİLDİ')
+
         profile_pk = self.kwargs.get('pk')
         profile = generics.get_object_or_404(Profile, pk=profile_pk)
         city = generics.get_object_or_404(City, city_name=self.request.data['city'])
@@ -74,8 +74,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         profile.city = city
         profile.district = district
 
-        pprint(self.request.data)
-        pprint(self.kwargs.get('pk'))
         serializer.save(city=city, district=district, rosettes=self.request.data['rosettes'], user=self.request.user)
 
     def get_queryset(self, *args, **kwargs):
@@ -104,7 +102,7 @@ class RosetteViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def add_user(self, request, pk=None, *args, **kwargs):
         rosette = self.get_object()
-        print(str(rosette))
+
         me = self.request.user
         me.profile.rosettes.add(rosette)
         # rosette.users.add(me_profile)

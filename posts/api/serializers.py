@@ -1,3 +1,4 @@
+from django.contrib.sites.models import Site
 from rest_framework import serializers
 from posts.models import *
 from users.api.serializers import UserSerializer
@@ -72,3 +73,32 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
+
+
+class ActivitySerializer(serializers.ModelSerializer):
+    creator = serializers.HyperlinkedRelatedField(
+        read_only=True,
+        view_name='users:user-detail',
+        lookup_field='username'
+    )
+    slug = serializers.SlugRelatedField(
+        slug_field='slug',
+        read_only=True
+    )
+
+    class Meta:
+        model = Activity
+        fields = '__all__'
+        lookup_field = 'slug'
+        read_only_fields = ['slug', 'is_active']
+
+    def get_slug(self, obj):
+        return f'http://127.0.0.1:8000/api/actions/activities/{obj.slug}/'
+
+
+class ActivityCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+        fields = '__all__'
+        lookup_field = 'slug'
+        read_only_fields = ['slug', 'is_active']
