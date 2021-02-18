@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core_t3.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core_t3.settings.production') #prod ortamı
 
 application = get_wsgi_application()

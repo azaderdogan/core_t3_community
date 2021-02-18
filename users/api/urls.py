@@ -7,7 +7,7 @@ from rest_framework_nested import routers
 
 parent_router = SimpleRouter()
 
-parent_router.register('users', UserViewSet)
+parent_router.register('users', UserViewSet,basename='user')
 
 # profile_router = routers.NestedSimpleRouter(
 #     router,
