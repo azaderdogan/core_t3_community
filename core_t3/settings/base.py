@@ -53,9 +53,9 @@ INSTALLED_APPS = [
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
+ALLOWED_HOSTS = ['aeyazilimblogu.com', 'www.aeyazilimblogu.com']
 # SECURITY WARNING: keep the secret key used in production secret!
-#boş dosya oluştur ve oradan oku
+# boş dosya oluştur ve oradan oku
 SECRET_KEY = 'f9p%(m7ymeb_klxuqeq649$@@f6**cw7d(_i3#7shva*rq+4if'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -152,8 +152,6 @@ REST_FRAMEWORK = {
 
 }
 
-
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -165,7 +163,6 @@ ALLOWED_HOSTS = ['*']
 
 
 STATIC_URL = '/static/'
-
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
