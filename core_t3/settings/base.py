@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-ALLOWED_HOSTS = ['aeyazilimblogu.com', 'www.aeyazilimblogu.com']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # boş dosya oluştur ve oradan oku
 SECRET_KEY = 'f9p%(m7ymeb_klxuqeq649$@@f6**cw7d(_i3#7shva*rq+4if'
@@ -94,15 +94,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core_t3.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 # Password validation
@@ -153,21 +144,20 @@ REST_FRAMEWORK = {
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT='uploads'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
 # for registration
 
