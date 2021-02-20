@@ -12,5 +12,5 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-ALLOWED_HOSTS = ['aeyazilimblogu.com', 'www.aeyazilimblogu.com']
+ALLOWED_HOSTS = ['aeyazilimblogu.com', 'www.aeyazilimblogu.com','188.166.3.250']
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
